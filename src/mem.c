@@ -37,8 +37,10 @@ kore_mem_init(void)
 }
 
 void *
-kore_malloc(size_t len)
+__kore_malloc(size_t len, const char *file, int line)
 {
+	kore_debug("[%s:%d] Mallocing %zu bytes", file, line, len);
+
 	size_t			mlen;
 	void			*ptr;
 	struct meminfo		*mem;
@@ -63,8 +65,10 @@ kore_malloc(size_t len)
 }
 
 void *
-kore_realloc(void *ptr, size_t len)
+__kore_realloc(void *ptr, size_t len, const char *file, int line)
 {
+	kore_debug("[%s:%d] Reallocing %zu bytes", file, line, len);
+
 	struct meminfo		*mem;
 	void			*nptr;
 
@@ -87,8 +91,10 @@ kore_realloc(void *ptr, size_t len)
 }
 
 void *
-kore_calloc(size_t memb, size_t len)
+__kore_calloc(size_t memb, size_t len, const char *file, int line)
 {
+	kore_debug("[%s:%d] Callocing %zu bytes", file, line, len);
+
 	if (memb == 0 || len == 0)
 		fatal("kore_calloc(): zero size");
 	if (SIZE_MAX / memb < len)

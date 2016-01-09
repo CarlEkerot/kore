@@ -486,10 +486,14 @@ int			kore_connection_accept(struct listener *,
 u_int64_t	kore_time_ms(void);
 void		kore_log_init(void);
 
-void		*kore_malloc(size_t);
+#define kore_malloc(z) __kore_malloc(z, __FILE__, __LINE__)
+#define kore_calloc(n, z) __kore_calloc(n, z, __FILE__, __LINE__)
+#define kore_realloc(p, z) __kore_realloc(p, z, __FILE__, __LINE__)
+
+void		*__kore_malloc(size_t, const char *, int);
 void		kore_parse_config(void);
-void		*kore_calloc(size_t, size_t);
-void		*kore_realloc(void *, size_t);
+void		*__kore_calloc(size_t, size_t, const char *, int);
+void		*__kore_realloc(void *, size_t, const char *, int);
 void		kore_mem_free(void *);
 void		kore_mem_init(void);
 
